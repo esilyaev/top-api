@@ -11,7 +11,7 @@ import {
 import { FindTopPageDto } from './dto/top-page.dto'
 import { TopPageModel } from './top-page.model'
 @Controller('top-page')
-export class ReviewController {
+export class TopPageController {
   @Post('create')
   async create(@Body() dto: Omit<TopPageModel, '_id'>) {}
 

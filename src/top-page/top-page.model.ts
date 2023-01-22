@@ -1,25 +1,66 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Document, SchemaTimestampsConfig } from 'mongoose'
+import { BaseModel } from 'src/config/mongo.base'
+
+export type TopPageDocument = TopPageModel & Document & SchemaTimestampsConfig
+
 export enum TopLevelCategory {
   Courses,
   Services,
   Books,
   Products,
 }
-export class TopPageModel {
-  firstCategory: TopLevelCategory;
-  secondCategory: string;
-  title: string;
-  category: string;
-  hh?: {
-    count: number;
-    juniorSalary: number;
-    middleSalary: number;
-    seniorSalary: number;
-  };
-  advantages: {
-    title: string;
-    description: string;
-  }[];
-  seoText: string;
-  tags: string[];
-  tagsText: string;
+
+export class HHData {
+  @Prop()
+  count: number
+
+  @Prop()
+  juniorSalary: number
+
+  @Prop()
+  middleSalary: number
+
+  @Prop()
+  seniorSalary: number
 }
+
+export class AdvantagesData {
+  @Prop()
+  title: string
+
+  @Prop()
+  description: string
+}
+
+@Schema({ timestamps: true })
+export class TopPageModel extends BaseModel {
+  @Prop({ enum: TopLevelCategory })
+  firstCategory: TopLevelCategory
+
+  @Prop()
+  secondCategory: string
+
+  @Prop()
+  title: string
+
+  @Prop()
+  category: string
+
+  @Prop(() => HHData)
+  hh?: HHData
+
+  @Prop(() => [AdvantagesData])
+  advantages: AdvantagesData[]
+
+  @Prop()
+  seoText: string
+
+  @Prop(() => [String])
+  tags: string[]
+
+  @Prop()
+  tagsText: string
+}
+
+export const TopPageSchema = SchemaFactory.createForClass(TopPageModel)
