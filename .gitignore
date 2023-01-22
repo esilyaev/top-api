@@ -1,7 +1,8 @@
 # compiled output
 /dist
 /node_modules
-/mongodata
+/mongodb
+/data
 
 # Logs
 logs
