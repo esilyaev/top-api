@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document, SchemaTimestampsConfig } from 'mongoose'
-import { BaseModel } from 'src/config/mongo.base'
+import { BaseModel } from '../config/mongo.base'
 
 export type ProductDocument = ProductModel & Document & SchemaTimestampsConfig
 
