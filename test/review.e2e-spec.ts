@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common'
-import { getConnectionToken } from '@nestjs/mongoose'
 import { Test, TestingModule } from '@nestjs/testing'
-import { disconnect, Types } from 'mongoose'
-import { CreateReviewDto } from 'src/review/dto/review.dto'
+import { Types } from 'mongoose'
 import * as request from 'supertest'
 import { AppModule } from '../src/app.module'
+import { CreateReviewDto } from '../src/review/dto/review.dto'
+import { REVIEW_NOT_FOUND } from '../src/review/review.constants'
 
 const productId = new Types.ObjectId().toHexString()
 const invalidId = new Types.ObjectId().toHexString()
@@ -69,10 +69,14 @@ describe('AppController (e2e)', () => {
       .expect(200)
   })
 
-  it('/review/:id (delete) - failed', () => {
-    return request(app.getHttpServer())
+  it('/review/:id (delete) - failed', (done) => {
+    request(app.getHttpServer())
       .delete('/review/' + invalidId)
       .expect(404)
+      .then(({ body }: request.Response) => {
+        expect(body.message).toBe(REVIEW_NOT_FOUND)
+        done()
+      })
   })
 
   afterAll(async () => {
