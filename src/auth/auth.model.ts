@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { IsEmail, IsString } from 'class-validator'
 import { Document, SchemaTimestampsConfig } from 'mongoose'
 import { BaseModel } from '../config/mongo.base'
 
@@ -6,7 +7,7 @@ export type AuthDocument = AuthModel & Document & SchemaTimestampsConfig
 
 @Schema({ timestamps: true })
 export class AuthModel extends BaseModel {
-  @Prop()
+  @Prop({ unique: true })
   email: string
 
   @Prop()
