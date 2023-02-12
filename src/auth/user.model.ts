@@ -3,10 +3,10 @@ import { IsEmail, IsString } from 'class-validator'
 import { Document, SchemaTimestampsConfig } from 'mongoose'
 import { BaseModel } from '../config/mongo.base'
 
-export type AuthDocument = AuthModel & Document & SchemaTimestampsConfig
+export type UserDocument = UserModel & Document & SchemaTimestampsConfig
 
 @Schema({ timestamps: true })
-export class AuthModel extends BaseModel {
+export class UserModel extends BaseModel {
   @Prop({ unique: true })
   email: string
 
@@ -14,4 +14,4 @@ export class AuthModel extends BaseModel {
   password: string
 }
 
-export const AuthSchema = SchemaFactory.createForClass(AuthModel)
+export const UserSchema = SchemaFactory.createForClass(UserModel)
